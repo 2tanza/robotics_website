@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ team_info.team_name }} - Robotics Team</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="nav">
+    {% for link in nav_config['main_links'] %}
+        {% if link.type == 'route' %}
+            <a href="{{ url_for(link.url) }}">{{ link.name }}</a>
+        {% elif link.type == 'dropdown' %}
+            <div class="dropdown">
+                <a href="{{ link.url }}" class="dropdown-toggle">{{ link.name }}</a>
+                <div class="dropdown-menu">
+                    {% for child in link.children %}
+                        <a href="{{ child.url }}">{{ child.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</nav>
+
+    <div class="container">
+
+        <!-- Hero image section -->
+        <div class="hero-image">
+            <div class="overlay-text">{{ team_info.team_name }} - Team {{ team_info.team_number }}</div>
+        </div>
+
+        <h1>{{ team_info.team_name }} - Team {{ team_info.team_number }}</h1>
+
+        {% block content %}
+        <p>Currently competing in: {{ team_info.current_competition }}</p>
+
+        <!-- Single image example -->
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='images/1810bot.jpg') }}" alt="Our Latest Robot">
+            <p class="image-caption">Our 2024 Competition Robots</p>
+        </div>
+
+        <h2>Our Team Photos</h2>
+        <!-- Image grid example -->
+        <div class="image-grid">
+            <img src="{{ url_for('static', filename='images/frcteam1.jpg') }}" alt="Team Photo 1">
+            <img src="{{ url_for('static', filename='images/9316bot.jpg') }}" alt="Team Photo 2">
+            <img src="{{ url_for('static', filename='images/inthestands.jpg') }}" alt="Team Photo 3">
+        </div>
+
+        <h2>Recent Achievements</h2>
+        <ul>
+            {% for achievement in team_info.achievements %}
+                <li>{{ achievement }}</li>
+            {% endfor %}
+        </ul>
+        {% endblock %}
+    </div>
+
+    <footer class="footer">
+        © {{ current_year }} {{ team_info.team_name }}. All rights reserved.
+    </footer>
+</body>
+
+</html>
