@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="nav">
+    {% for link in nav_config['main_links'] %}
+        {% if link.type == 'route' %}
+            <a href="{{ url_for(link.url) }}">{{ link.name }}</a>
+        {% elif link.type == 'dropdown' %}
+            <div class="dropdown">
+                <a href="{{ link.url }}" class="dropdown-toggle">{{ link.name }}</a>
+                <div class="dropdown-menu">
+                    {% for child in link.children %}
+                        <a href="{{ child.url }}">{{ child.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</nav>
+    <div class="container">
+        <h1>Meet Our Team</h1>
+        <p>Welcome to the team page!</p>
+    </div>
+</body>
+</html>
